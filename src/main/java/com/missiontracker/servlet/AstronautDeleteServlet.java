@@ -14,6 +14,7 @@ public class AstronautDeleteServlet extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
+        // FIXME arreglar metodo conectado
         Connection conn = DBConnection.getConnection();
         AstronautDAO dao = new AstronautDAO(conn);
         dao.deleteAstronautById(id);
