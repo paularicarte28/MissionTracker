@@ -8,11 +8,9 @@ public class DBConnection {
 
     public void connect() throws ClassNotFoundException, SQLException {
         Class.forName("org.mariadb.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mariadb://localhost:3307/missiontracker", "root", "root");
-    }
-
-    public void close() throws SQLException {
-        connection.close();
+        connection = DriverManager.getConnection(
+            "jdbc:mariadb://localhost:3307/missiontracker", "root", "root"
+        );
     }
 
     public Connection getConnection() {
