@@ -47,3 +47,10 @@
         <servlet-name>MissionListServlet</servlet-name>
         <servlet-class>com.missiontracker.servlet.MissionListServlet</servlet-class>
     </servlet>
+    
+    <!-- Lista misiones -->
+
+    <servlet-mapping>
+        <servlet-name>MissionListServlet</servlet-name>
+        <url-pattern>/misiones</url-pattern>
+    </servlet-mapping>

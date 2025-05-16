@@ -99,4 +99,44 @@ public class AstronautDAO {
 
     }
 
+    // GET By Page
+    public List<Astronaut> getAstronautsByPage(int limit, int offset) {
+        List<Astronaut> astronauts = new ArrayList<>();
+        try {
+            String sql = "SELECT a.*, m.name AS mission_name FROM astronaut a LEFT JOIN mission m ON a.mission_id = m.id LIMIT ? OFFSET ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, limit);
+            stmt.setInt(2, offset);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Astronaut a = new Astronaut(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("nationality"),
+                        rs.getString("role"),
+                        rs.getInt("mission_id"));
+                a.setMissionName(rs.getString("mission_name"));
+                astronauts.add(a);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return astronauts;
+    }
+
+    public int getTotalAstronauts() {
+        try {
+            String sql = "SELECT COUNT(*) FROM astronaut";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

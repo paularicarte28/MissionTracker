@@ -51,6 +51,31 @@
             </table>
 
             <a href="astronautas/formulario.jsp">Add new astronaut</a>
+            <% int currentPage=(int) request.getAttribute("currentPage"); int totalPages=(int)
+                request.getAttribute("totalPages"); %>
+
+                <div style="margin-top: 20px;">
+                    <% if (currentPage> 1) { %>
+                        <a href="/MissionTracker/astronautas?page=<%= currentPage - 1 %>">Previous</a>
+                        <% } %>
+
+                            <% for (int i=1; i <=totalPages; i++) { %>
+                                <% if (i==currentPage) { %>
+                                    <strong>
+                                        <%= i %>
+                                    </strong>
+                                    <% } else { %>
+                                        <a href="/MissionTracker/astronautas?page=<%= i %>">
+                                            <%= i %>
+                                        </a>
+                                        <% } %>
+                                            <% } %>
+
+                                                <% if (currentPage < totalPages) { %>
+                                                    <a
+                                                        href="/MissionTracker/astronautas?page=<%= currentPage + 1 %>">Next</a>
+                                                    <% } %>
+                </div>
 
         </body>
 
