@@ -1,36 +1,80 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Registrar Astronauta</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <title>Register Astronaut</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f8f9fa;
+            padding: 2rem;
+        }
+        .form-container {
+            background-color: #2c2f33;
+            border: 1px solid #0dcaf0;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 600px;
+            margin: auto;
+        }
+        .btn-primary {
+            background-color: #0dcaf0;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #31d2f2;
+        }
+        a {
+            color: #0dcaf0;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>🚀 Registrar nuevo astronauta</h1>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🚀 Register New Astronaut</h2>
 
-    <%-- Mostrar mensaje de error si existe --%>
-    <% if (request.getAttribute("error") != null) { %>
-        <p style="color:red;"><strong><%= request.getAttribute("error") %></strong></p>
-    <% } %>
+    <div class="form-container">
+        <% if (request.getAttribute("error") != null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= request.getAttribute("error") %>
+            </div>
+        <% } %>
 
-    <form action="<%= request.getContextPath() %>/astronautas/registro" method="post">
-        <label for="name">Nombre:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
+        <form action="<%= request.getContextPath() %>/astronautas/registro" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
 
-        <label for="nationality">Nacionalidad:</label><br>
-        <input type="text" id="nationality" name="nationality" required><br><br>
+            <div class="mb-3">
+                <label for="nationality" class="form-label">Nationality</label>
+                <input type="text" class="form-control" id="nationality" name="nationality" required>
+            </div>
 
-        <label for="role">Rol:</label><br>
-        <input type="text" id="role" name="role" required><br><br>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <input type="text" class="form-control" id="role" name="role" required>
+            </div>
 
-        <label for="missionid">ID de Misión:</label><br>
-        <input type="number" id="missionid" name="missionid" required><br><br>
+            <!-- <div class="mb-3">
+                <label for="missionid" class="form-label">Mission ID</label>
+                <input type="number" class="form-control" id="missionid" name="missionid" required>
+            </div> -->
 
-        <input type="submit" value="Registrar">
-    </form>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
 
-    <br>
-    <a href="<%= request.getContextPath() %>/astronautas/lista">🔙 Volver a la lista</a>
+        <div class="mt-3 text-center">
+            <a href="<%= request.getContextPath() %>/astronautas/lista">🔙 Back to list</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
