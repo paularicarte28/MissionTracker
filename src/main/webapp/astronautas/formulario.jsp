@@ -1,47 +1,80 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.missiontracker.model.Mission" %>
-<%@ page import="com.missiontracker.dao.MissionDAO" %>
-<%@ page import="com.missiontracker.database.DBConnection" %>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Add Astronaut</title>
+    <title>Register Astronaut</title>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f8f9fa;
+            padding: 2rem;
+        }
+        .form-container {
+            background-color: #2c2f33;
+            border: 1px solid #0dcaf0;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 600px;
+            margin: auto;
+        }
+        .btn-primary {
+            background-color: #0dcaf0;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #31d2f2;
+        }
+        a {
+            color: #0dcaf0;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Add New Astronaut</h2>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🚀 Register New Astronaut</h2>
 
-<form action="/MissionTracker/astronautas/registrar" method="post">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <div class="form-container">
+        <% if (request.getAttribute("error") != null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= request.getAttribute("error") %>
+            </div>
+        <% } %>
 
-    <label>Nationality:</label><br>
-    <input type="text" name="nationality" required><br><br>
+        <form action="<%= request.getContextPath() %>/astronautas/registro" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
 
-    <label>Role:</label><br>
-    <input type="text" name="role" required><br><br>
+            <div class="mb-3">
+                <label for="nationality" class="form-label">Nationality</label>
+                <input type="text" class="form-control" id="nationality" name="nationality" required>
+            </div>
 
-    <label>Mission:</label><br>
-    <select name="missionId">
-        <option value="">-- Select a mission --</option>
-        <%
-            // Obtener las misiones desde la base de datos
-            MissionDAO missionDAO = new MissionDAO(DBConnection.getConnection());
-            List<Mission> missions = missionDAO.getAllMissions();
-            for (Mission m : missions) {
-        %>
-            <option value="<%= m.getId() %>"><%= m.getName() %></option>
-        <%
-            }
-        %>
-    </select><br><br>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <input type="text" class="form-control" id="role" name="role" required>
+            </div>
 
-    <button type="submit">Save</button>
-</form>
+            <!-- <div class="mb-3">
+                <label for="missionid" class="form-label">Mission ID</label>
+                <input type="number" class="form-control" id="missionid" name="missionid" required>
+            </div> -->
 
-<p><a href="/MissionTracker/astronautas">Back to list</a></p>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+
+        <div class="mt-3 text-center">
+            <a href="<%= request.getContextPath() %>/astronautas/lista">🔙 Back to list</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -3,10 +3,10 @@
 <%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Astronautas</title>
+    <title>Astronauts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,8 +15,8 @@
 
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-info">👨‍🚀 Lista de Astronautas</h2>
-        <a href="<%= request.getContextPath() %>/astronautas/registro" class="btn btn-success">➕ Añadir Astronauta</a>
+        <h2 class="text-info">👨‍🚀 Astronaut List</h2>
+        <a href="<%= request.getContextPath() %>/astronautas/formulario.jsp" class="btn btn-success">➕ Add Astronaut</a>
     </div>
 
     <%
@@ -24,7 +24,7 @@
 
         if (astronauts == null || astronauts.isEmpty()) {
     %>
-        <div class="alert alert-warning">⚠️ No hay astronautas registrados en la base de datos.</div>
+        <div class="alert alert-warning">⚠️ No astronauts registered in the database.</div>
     <%
         } else {
     %>
@@ -36,15 +36,15 @@
                 <div class="card-body">
                     <h5 class="card-title"><%= a.getName() %></h5>
                     <p class="card-text">
-                        <strong>País:</strong> <%= a.getNationality() %><br>
-                        <strong>Rol:</strong> <%= a.getRole() %>
+                        <strong>Nationality:</strong> <%= a.getNationality() %><br>
+                        <strong>Role:</strong> <%= a.getRole() %>
                     </p>
                     <div class="d-flex justify-content-between">
-                        <a href="<%= request.getContextPath() %>/astronautas/detalle?id=<%= a.getId() %>" class="btn btn-outline-info btn-sm">Detalles</a>
+                        <a href="<%= request.getContextPath() %>/astronautas/detalle?id=<%= a.getId() %>" class="btn btn-outline-info btn-sm">Details</a>
                         <form method="get" action="<%= request.getContextPath() %>/astronautas/eliminar"
-                              onsubmit="return confirm('¿Eliminar a <%= a.getName() %>?');">
+                              onsubmit="return confirm('Are you sure you want to delete <%= a.getName() %>?');">
                             <input type="hidden" name="id" value="<%= a.getId() %>">
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                         </form>
                     </div>
                 </div>
