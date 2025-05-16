@@ -16,7 +16,7 @@ public class DBConnection {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Database connection failed");
-        
+
         }
     }
 }

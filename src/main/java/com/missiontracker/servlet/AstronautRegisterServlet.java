@@ -1,4 +1,4 @@
-package main.java.com.missiontracker.servlet;
+package com.missiontracker.servlet;
 
 import com.missiontracker.dao.AstronautDAO;
 import com.missiontracker.database.DBConnection;

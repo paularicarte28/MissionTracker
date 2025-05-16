@@ -18,9 +18,28 @@ public class AstronautListServlet extends HttpServlet {
 
         Connection conn = DBConnection.getConnection();
         AstronautDAO dao = new AstronautDAO(conn);
-        List<Astronaut> astronauts = dao.getAllAstronauts();
+
+        int page = 1;
+        int pageSize = 3;
+
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                page = Integer.parseInt(pageParam);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        int offset = (page - 1) * pageSize;
+
+        List<Astronaut> astronauts = dao.getAstronautsByPage(pageSize, offset);
+        int totalAstronauts = dao.getTotalAstronauts();
+        int totalPages = (int) Math.ceil((double) totalAstronauts / pageSize);
 
         request.setAttribute("astronauts", astronauts);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/astronautas/lista.jsp");
         dispatcher.forward(request, response);
     }

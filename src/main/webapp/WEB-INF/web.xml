@@ -22,7 +22,7 @@
         <url-pattern>/detalle</url-pattern>
     </servlet-mapping>
 
-        <!-- REGISTRO de astronauta -->
+    <!-- REGISTRO de astronauta -->
     <servlet>
         <servlet-name>AstronautRegisterServlet</servlet-name>
         <servlet-class>com.missiontracker.servlet.AstronautRegisterServlet</servlet-class>
@@ -30,4 +30,27 @@
     <servlet-mapping>
         <servlet-name>AstronautRegisterServlet</servlet-name>
         <url-pattern>/astronautas/registrar</url-pattern>
+    </servlet-mapping>
+
+    <!-- Elimianr de astronauta -->
+    <servlet>
+        <servlet-name>AstronautDeleteServlet</servlet-name>
+        <servlet-class>com.missiontracker.servlet.AstronautDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AstronautDeleteServlet</servlet-name>
+        <url-pattern>/astronautas/eliminar</url-pattern>
+    </servlet-mapping>
+
+        <servlet>
+        <servlet-name>MissionListServlet</servlet-name>
+        <servlet-class>com.missiontracker.servlet.MissionListServlet</servlet-class>
+    </servlet>
+    
+    <!-- Lista misiones -->
+
+    <servlet-mapping>
+        <servlet-name>MissionListServlet</servlet-name>
+        <url-pattern>/misiones</url-pattern>
     </servlet-mapping>
