@@ -7,158 +7,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AstronautDAO {
-
     private Connection connection;
 
     public AstronautDAO(Connection connection) {
         this.connection = connection;
     }
 
+    public Astronaut getAstronautById(int id) {
+        Astronaut astronaut = null;
+        try {
+            String sql = "SELECT a.*, m.name AS mission_name " +
+                         "FROM astronauts a " +
+                         "LEFT JOIN missions m ON a.mission_id = m.id " +
+                         "WHERE a.id = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+          if (rs.next()) {
+    astronaut = new Astronaut();
+    astronaut.setId(rs.getInt("id"));
+    astronaut.setName(rs.getString("name"));
+    astronaut.setNationality(rs.getString("nationality"));
+    // astronaut.setMissionName(rs.getString("mission_name"));
+}
+
+            stmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+        return astronaut;
+    }
+
     public List<Astronaut> getAllAstronauts() {
         List<Astronaut> astronauts = new ArrayList<>();
         try {
-            String sql = "SELECT a.*, m.name AS mission_name " +
-                    "FROM astronaut a LEFT JOIN mission m ON a.mission_id = m.id";
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM astronauts " ;
+                        
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Astronaut a = new Astronaut(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("nationality"),
-                        rs.getString("role"),
-                        rs.getInt("mission_id"));
-                a.setMissionName(rs.getString("mission_name"));
-                astronauts.add(a);
-            }
+                Astronaut astronaut = new Astronaut();
+                astronaut.setId(rs.getInt("id"));
+                astronaut.setName(rs.getString("name"));
+                astronaut.setNationality(rs.getString("nationality"));
+                // astronaut.setMissionName(rs.getString("mission_name"));
+                   astronauts.add(astronaut);
+            }System.out.println("Astronauts encontrados: " + astronauts.size());
+
+            stmt.close();
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return astronauts;
     }
-
-    // GET BY ID
-    public Astronaut getAstronautById(int id) {
-        try {
-            String sql = "SELECT a.*, m.name AS mission_name " +
-                    "FROM astronaut a LEFT JOIN mission m ON a.mission_id = m.id " +
-                    "WHERE a.id = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Astronaut a = new Astronaut(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("nationality"),
-                        rs.getString("role"),
-                        rs.getInt("mission_id"));
-                a.setMissionName(rs.getString("mission_name"));
-                return a;
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    // INSERT
-    public void insertAstronaut(Astronaut astronaut) {
-        try {
-            String sql = "INSERT INTO astronaut (name, nationality, role, mission_id) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, astronaut.getName());
-            stmt.setString(2, astronaut.getNationality());
-            stmt.setString(3, astronaut.getRole());
-
-            if (astronaut.getMissionId() == 0) {
-                stmt.setNull(4, java.sql.Types.INTEGER);
-            } else {
-                stmt.setInt(4, astronaut.getMissionId());
-            }
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // DELETE
-
-    public void deleteAstronautById(int id) {
-        try {
-            String sql = "DELETE FROM astronaut WHERE id = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    // GET By Page
-    public List<Astronaut> getAstronautsByPage(int limit, int offset) {
-        List<Astronaut> astronauts = new ArrayList<>();
-        try {
-            String sql = "SELECT a.*, m.name AS mission_name FROM astronaut a LEFT JOIN mission m ON a.mission_id = m.id LIMIT ? OFFSET ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, limit);
-            stmt.setInt(2, offset);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Astronaut a = new Astronaut(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("nationality"),
-                        rs.getString("role"),
-                        rs.getInt("mission_id"));
-                a.setMissionName(rs.getString("mission_name"));
-                astronauts.add(a);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return astronauts;
-    }
-
-    public int getTotalAstronauts() {
-        try {
-            String sql = "SELECT COUNT(*) FROM astronaut";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-     // UPDATE ONE
-    public void updateAstronaut(Astronaut astronaut) {
-        try {
-            String sql = "UPDATE astronaut SET name=?, nationality=?, role=?, mission_id=? WHERE id=?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, astronaut.getName());
-            stmt.setString(2, astronaut.getNationality());
-            stmt.setString(3, astronaut.getRole());
-
-            if (astronaut.getMissionId() == 0) {
-                stmt.setNull(4, java.sql.Types.INTEGER);
-            } else {
-                stmt.setInt(4, astronaut.getMissionId());
-            }
-
-            stmt.setInt(5, astronaut.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

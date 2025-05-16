@@ -4,11 +4,14 @@ import com.missiontracker.dao.AstronautDAO;
 import com.missiontracker.model.Astronaut;
 import com.missiontracker.database.DBConnection;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
+
+@WebServlet("/astronautas/lista")
 
 public class AstronautListServlet extends HttpServlet {
 
@@ -16,31 +19,20 @@ public class AstronautListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Connection conn = DBConnection.getConnection();
-        AstronautDAO dao = new AstronautDAO(conn);
+        try {
+            DBConnection db = new DBConnection();
+            db.connect(); // ✅ Ahora sí, primero conectamos
+            Connection connection = db.getConnection();
 
-        int page = 1;
-        int pageSize = 3;
+            AstronautDAO dao = new AstronautDAO(connection);
+            List<Astronaut> astronauts = dao.getAllAstronauts();
 
-        String pageParam = request.getParameter("page");
-        if (pageParam != null) {
-            try {
-                page = Integer.parseInt(pageParam);
-            } catch (NumberFormatException ignored) {
-            }
+            request.setAttribute("astronauts", astronauts);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/astronautas/lista.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // SteamWeb-style: logging directo
         }
-
-        int offset = (page - 1) * pageSize;
-
-        List<Astronaut> astronauts = dao.getAstronautsByPage(pageSize, offset);
-        int totalAstronauts = dao.getTotalAstronauts();
-        int totalPages = (int) Math.ceil((double) totalAstronauts / pageSize);
-
-        request.setAttribute("astronauts", astronauts);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/astronautas/lista.jsp");
-        dispatcher.forward(request, response);
     }
 }

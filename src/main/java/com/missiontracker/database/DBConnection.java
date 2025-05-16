@@ -3,20 +3,27 @@ package com.missiontracker.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 public class DBConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/missiontracker";
-    private static final String USER = "root";
-    private static final String PASSWORD = "Admin";
+    private Connection connection;
 
-    public static Connection getConnection() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Database connection failed");
+    public void connect() throws ClassNotFoundException, SQLException {
+        Class.forName("org.mariadb.jdbc.Driver");
+        connection = DriverManager.getConnection(
+            "jdbc:mariadb://localhost:3307/missiontracker", "root", "root"
+        );
+    }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void disconnect() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

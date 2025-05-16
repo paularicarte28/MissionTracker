@@ -1,6 +1,9 @@
 package com.missiontracker.dao;
 
 import com.missiontracker.model.Mission;
+
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +23,17 @@ public class MissionDAO {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Mission m = new Mission(
+                missions.add(new Mission(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("launch_date"),
                         rs.getString("objective"),
-                        rs.getString("status"));
-                missions.add(m);
+                        rs.getString("status")));
             }
+
+            stmt.close();
+            rs.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -45,18 +51,20 @@ public class MissionDAO {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Mission m = new Mission(
+                results.add(new Mission(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("launch_date"),
                         rs.getString("objective"),
-                        rs.getString("status"));
-                results.add(m);
+                        rs.getString("status")));
             }
+
+            stmt.close();
+            rs.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return results;
     }
-
 }

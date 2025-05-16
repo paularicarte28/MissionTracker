@@ -1,82 +1,55 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.missiontracker.model.Astronaut" %>
-    <%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %>
 
-        <html>
+<html>
+<head>
+    <title>Lista de Astronautas</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
 
-        <head>
-            <title>Astronaut List</title>
-            <link rel="stylesheet" href="../css/styles.css">
-        </head>
+    <h1>✅ lista.jsp cargado correctamente</h1>
 
-        <body>
+    <%
+        List<Astronaut> astronauts = (List<Astronaut>) request.getAttribute("astronauts");
 
-            <h2>Astronauts</h2>
-            <table border="1">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Nationality</th>
-                    <th>Role</th>
-                    <th>Mission</th>
-                </tr>
-                <% List<Astronaut> astronauts = (List<Astronaut>) request.getAttribute("astronauts");
-                        for (Astronaut a : astronauts) {
-                        %>
-                        <tr>
-                            <td>
-                                <%= a.getId() %>
-                            </td>
-                            <td><a href="detalle?id=<%= a.getId() %>">
-                                    <%= a.getName() %>
-                                </a></td>
-                            <td>
-                                <%= a.getNationality() %>
-                            </td>
-                            <td>
-                                <%= a.getRole() %>
-                            </td>
-                            <td>
-                                <%= a.getMissionName() !=null ? a.getMissionName() : "Unassigned" %>
-                            </td>
+        if (astronauts == null) {
+    %>
+        <p style="color:red;">❌ La lista de astronautas es <strong>null</strong>. Verifica el servlet.</p>
 
-                            <td>
-                                <form action="/MissionTracker/astronautas/eliminar" method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this astronaut?');">
-                                    <input type="hidden" name="id" value="<%= a.getId() %>" />
-                                    <button type="submit">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <% } %>
-            </table>
+    <%
+        } else if (astronauts.isEmpty()) {
+    %>
+        <p style="color:orange;">⚠️ La lista de astronautas está vacía. No hay registros en la base de datos.</p>
 
-            <a href="astronautas/formulario.jsp">Add new astronaut</a>
-            <% int currentPage=(int) request.getAttribute("currentPage"); int totalPages=(int)
-                request.getAttribute("totalPages"); %>
+    <%
+        } else {
+    %>
 
-                <div style="margin-top: 20px;">
-                    <% if (currentPage> 1) { %>
-                        <a href="/MissionTracker/astronautas?page=<%= currentPage - 1 %>">Previous</a>
-                        <% } %>
+    <p>✅ Astronautas encontrados: <%= astronauts.size() %></p>
 
-                            <% for (int i=1; i <=totalPages; i++) { %>
-                                <% if (i==currentPage) { %>
-                                    <strong>
-                                        <%= i %>
-                                    </strong>
-                                    <% } else { %>
-                                        <a href="/MissionTracker/astronautas?page=<%= i %>">
-                                            <%= i %>
-                                        </a>
-                                        <% } %>
-                                            <% } %>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>País</th>
+            <th>Rol</th>
+            <th>Misión</th>
+        </tr>
 
-                                                <% if (currentPage < totalPages) { %>
-                                                    <a
-                                                        href="/MissionTracker/astronautas?page=<%= currentPage + 1 %>">Next</a>
-                                                    <% } %>
-                </div>
+        <% for (Astronaut a : astronauts) { %>
+        <tr>
+            <td><%= a.getId() %></td>
+            <td><a href="<%= request.getContextPath() %>/detalle?id=<%= a.getId() %>"><%= a.getName() %></a></td>
+          
+        </tr>
+        <% } %>
+    </table>
 
-        </body>
+    <%
+        }
+    %>
 
-        </html>
+</body>
+</html>
