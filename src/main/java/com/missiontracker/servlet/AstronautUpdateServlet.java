@@ -9,26 +9,29 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Connection;
 
-public class AstronautRegisterServlet {
+public class AstronautUpdateServlet extends HttpServlet {
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String nationality = request.getParameter("nationality");
         String role = request.getParameter("role");
         String missionIdStr = request.getParameter("missionId");
-        
+
         int missionId = 0;
         if (missionIdStr != null && !missionIdStr.isEmpty()) {
             missionId = Integer.parseInt(missionIdStr);
         }
 
-        Astronaut newAstronaut = new Astronaut(0, name, nationality, role, missionId);
+        Astronaut astronaut = new Astronaut(id, name, nationality, role, missionId);
 
         Connection conn = DBConnection.getConnection();
         AstronautDAO dao = new AstronautDAO(conn);
-        dao.insertAstronaut(newAstronaut);
+        dao.updateAstronaut(astronaut);
 
         response.sendRedirect("/MissionTracker/astronautas");
     }
+
 }
