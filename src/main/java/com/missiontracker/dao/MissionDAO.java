@@ -1,4 +1,4 @@
-package main.java.com.missiontracker.dao;
+package com.missiontracker.dao;
 
 import com.missiontracker.model.Mission;
 import java.sql.*;
