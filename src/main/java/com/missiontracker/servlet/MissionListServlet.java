@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-public class MissioListServlet extends HttpServlet {
+public class MissionListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
