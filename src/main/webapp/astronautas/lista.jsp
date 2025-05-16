@@ -26,7 +26,7 @@
                             <td>
                                 <%= a.getId() %>
                             </td>
-                            <td><a href="detalle?id=<%= a.getId() %>">
+                            <td><a href="./detalle.jsp">
                                     <%= a.getName() %>
                                 </a></td>
                             <td>
@@ -40,17 +40,17 @@
                             </td>
 
                             <td>
-                                <form action="/MissionTracker/astronautas/eliminar" method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this astronaut?');">
-                                    <input type="hidden" name="id" value="<%= a.getId() %>" />
-                                    <button type="submit">Delete</button>
-                                </form>
+                                <!-- <form action="/MissionTracker/astronautas/eliminar" method="post" -->
+                                    <!-- onsubmit="return confirm('Are you sure you want to delete this astronaut?');"> -->
+                                    <!-- <input type="hidden" name="id" value="<%= a.getId() %>" /> -->
+                                    <!-- <button type="submit">Delete</button> -->
+                                <!-- </form> -->
                             </td>
                         </tr>
                         <% } %>
             </table>
 
-            <a href="astronautas/formulario.jsp">Add new astronaut</a>
+            <!-- <a href="astronautas/formulario.jsp">Add new astronaut</a> -->
 
         </body>
 

@@ -1,1 +1,8 @@
+com\missiontracker\model\Mission.class
+com\missiontracker\servlet\AstronautListServlet.class
 com\missiontracker\database\DBConnection.class
+com\missiontracker\dao\MissionDAO.class
+com\missiontracker\dao\AstronautDAO.class
+com\missiontracker\servlet\MissionListServlet.class
+com\missiontracker\servlet\AstronautDetailServlet.class
+com\missiontracker\model\Astronaut.class

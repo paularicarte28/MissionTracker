@@ -14,8 +14,9 @@ public class MissionListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Connection conn = DBConnection.getConnection();
-        MissionDAO dao = new MissionDAO(conn);
+         DBConnection db = new DBConnection(); // ✅ instanciamos el objeto
+    Connection connection = db.getConnection(); // ✅ llamada válida
+        MissionDAO dao = new MissionDAO(connection);
 
         String query = request.getParameter("q");
         List<Mission> missions;

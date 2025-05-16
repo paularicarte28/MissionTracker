@@ -21,3 +21,4 @@
         <servlet-name>AstronautDetailServlet</servlet-name>
         <url-pattern>/detalle</url-pattern>
     </servlet-mapping>
+    </web-app>
