@@ -24,7 +24,7 @@ public class AstronautRegisterServlet extends HttpServlet {
 
         // Validación básica
         if (name == null || nationality == null || role == null || missionIdParam == null ||
-                name.isEmpty() || nationality.isEmpty() || role.isEmpty() || missionIdParam.isEmpty()) {
+            name.isEmpty() || nationality.isEmpty() || role.isEmpty() || missionIdParam.isEmpty()) {
 
             request.setAttribute("error", "❌ Todos los campos son obligatorios.");
             request.getRequestDispatcher("/astronautas/formulario.jsp").forward(request, response);

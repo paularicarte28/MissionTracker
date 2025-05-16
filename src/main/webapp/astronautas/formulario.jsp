@@ -1,47 +1,36 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.missiontracker.model.Mission" %>
-<%@ page import="com.missiontracker.dao.MissionDAO" %>
-<%@ page import="com.missiontracker.database.DBConnection" %>
-
 <html>
 <head>
-    <title>Add Astronaut</title>
-    <meta charset="UTF-8">
+    <title>Registrar Astronauta</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
-<h2>Add New Astronaut</h2>
+    <h1>🚀 Registrar nuevo astronauta</h1>
 
-<form action="/MissionTracker/astronautas/registrar" method="post">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <%-- Mostrar mensaje de error si existe --%>
+    <% if (request.getAttribute("error") != null) { %>
+        <p style="color:red;"><strong><%= request.getAttribute("error") %></strong></p>
+    <% } %>
 
-    <label>Nationality:</label><br>
-    <input type="text" name="nationality" required><br><br>
+    <form action="<%= request.getContextPath() %>/astronautas/registro" method="post">
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
 
-    <label>Role:</label><br>
-    <input type="text" name="role" required><br><br>
+        <label for="nationality">Nacionalidad:</label><br>
+        <input type="text" id="nationality" name="nationality" required><br><br>
 
-    <label>Mission:</label><br>
-    <select name="missionId">
-        <option value="">-- Select a mission --</option>
-        <%
-            // Obtener las misiones desde la base de datos
-            MissionDAO missionDAO = new MissionDAO(DBConnection.getConnection());
-            List<Mission> missions = missionDAO.getAllMissions();
-            for (Mission m : missions) {
-        %>
-            <option value="<%= m.getId() %>"><%= m.getName() %></option>
-        <%
-            }
-        %>
-    </select><br><br>
+        <label for="role">Rol:</label><br>
+        <input type="text" id="role" name="role" required><br><br>
 
-    <button type="submit">Save</button>
-</form>
+        <label for="missionid">ID de Misión:</label><br>
+        <input type="number" id="missionid" name="missionid" required><br><br>
 
-<p><a href="/MissionTracker/astronautas">Back to list</a></p>
+        <input type="submit" value="Registrar">
+    </form>
+
+    <br>
+    <a href="<%= request.getContextPath() %>/astronautas/lista">🔙 Volver a la lista</a>
 
 </body>
 </html>
