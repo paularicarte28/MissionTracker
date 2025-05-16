@@ -21,7 +21,7 @@ public class AstronautListServlet extends HttpServlet {
 
         try {
             DBConnection db = new DBConnection();
-            db.connect(); // ✅ Ahora sí, primero conectamos
+            db.connect(); // 
             Connection connection = db.getConnection();
 
             AstronautDAO dao = new AstronautDAO(connection);
@@ -32,7 +32,11 @@ public class AstronautListServlet extends HttpServlet {
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
-            e.printStackTrace(); // SteamWeb-style: logging directo
+        e.printStackTrace();
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().println("<h2 style='color:red'>❌ Error al cargar los astronautas</h2>");
+}
+
         }
-    }
+    
 }

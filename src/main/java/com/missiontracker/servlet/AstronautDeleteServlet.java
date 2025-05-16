@@ -1,24 +1,39 @@
-package com.missiontracker.servlet;
+// package com.missiontracker.servlet;
 
-import com.missiontracker.dao.AstronautDAO;
-import com.missiontracker.database.DBConnection;
+// import com.missiontracker.dao.AstronautDAO;
+// import com.missiontracker.database.DBConnection;
+// import com.missiontracker.model.Astronaut;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.IOException;
-import java.sql.Connection;
+// import javax.servlet.*;
+// import javax.servlet.annotation.WebServlet;
+// import javax.servlet.http.*;
+// import java.io.IOException;
+// import java.sql.Connection;
 
-public class AstronautDeleteServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+// @WebServlet("/astronautas/lista")
 
-        int id = Integer.parseInt(request.getParameter("id"));
+// public class AstronautDeleteServlet extends HttpServlet {
+// @Override
 
-        // FIXME arreglar metodo conectado
-        Connection conn = DBConnection.getConnection();
-        AstronautDAO dao = new AstronautDAO(conn);
-        dao.deleteAstronautById(id);
+//        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//         response.setCharacterEncoding("UTF-8");
 
-        response.sendRedirect("/MissionTracker/astronautas");
-    }
-}
+//         try {
+//             int id = Integer.parseInt(request.getParameter("id"));
+
+            
+//             DBConnection db = new DBConnection();
+//             db.connect();
+//             Connection connection = db.getConnection();
+
+//             AstronautDAO dao = new AstronautDAO(connection);
+//             Astronaut astronaut = dao.deleteAstronautById(id);
+
+//             response.sendRedirect("/MissionTracker/astronautas");
+
+//         } catch (Exception e) {
+//             e.printStackTrace(); // SteamWeb-style: imprime y sigue sin interrupción
+//         }
+
+//     }
+// }
