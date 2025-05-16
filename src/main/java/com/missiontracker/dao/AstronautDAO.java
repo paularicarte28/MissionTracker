@@ -53,7 +53,7 @@ public class AstronautDAO {
                 astronaut.setId(rs.getInt("id"));
                 astronaut.setName(rs.getString("name"));
                 astronaut.setNationality(rs.getString("nationality"));
-                 astronaut.setRole(rs.getString("rol"));
+                 astronaut.setRole(rs.getString("role"));
                    astronauts.add(astronaut);
             }System.out.println("Astronauts encontrados: " + astronauts.size());
 
