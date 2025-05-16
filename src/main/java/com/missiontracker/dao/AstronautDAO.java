@@ -64,6 +64,7 @@ public class AstronautDAO {
         return null;
     }
 
+    // INSERT
     public void insertAstronaut(Astronaut astronaut) {
         try {
             String sql = "INSERT INTO astronaut (name, nationality, role, mission_id) VALUES (?, ?, ?, ?)";
@@ -82,6 +83,20 @@ public class AstronautDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // DELETE
+
+    public void deleteAstronautById(int id) {
+        try {
+            String sql = "DELETE FROM astronaut WHERE id = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
