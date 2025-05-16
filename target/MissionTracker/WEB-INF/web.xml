@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         version="3.0">
 
-    <!-- LISTADO de astronautas -->
-    <servlet>
-        <servlet-name>AstronautListServlet</servlet-name>
-        <servlet-class>com.missiontracker.servlet.AstronautListServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AstronautListServlet</servlet-name>
-        <url-pattern>/astronautas</url-pattern>
-    </servlet-mapping>
-
-    <!-- DETALLE de astronauta -->
-    <servlet>
-        <servlet-name>AstronautDetailServlet</servlet-name>
-        <servlet-class>com.missiontracker.servlet.AstronautDetailServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AstronautDetailServlet</servlet-name>
-        <url-pattern>/detalle</url-pattern>
-    </servlet-mapping>
-    </web-app>
+<web-app>
+    <display-name>Steam web application</display-name>
+</web-app>

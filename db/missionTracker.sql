@@ -16,7 +16,7 @@
 
 
 -- Volcando estructura de base de datos para mission tracker
-CREATE DATABASE IF NOT EXISTS `mission tracker` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
+CREATE DATABASE IF NOT EXISTS `missiontracker` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
 USE `mission tracker`;
 
 -- Volcando estructura para tabla mission tracker.astronaut
