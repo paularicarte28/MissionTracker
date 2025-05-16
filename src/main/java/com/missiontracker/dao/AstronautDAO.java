@@ -64,4 +64,24 @@ public class AstronautDAO {
         return null;
     }
 
+    public void insertAstronaut(Astronaut astronaut) {
+        try {
+            String sql = "INSERT INTO astronaut (name, nationality, role, mission_id) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, astronaut.getName());
+            stmt.setString(2, astronaut.getNationality());
+            stmt.setString(3, astronaut.getRole());
+
+            if (astronaut.getMissionId() == 0) {
+                stmt.setNull(4, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(4, astronaut.getMissionId());
+            }
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

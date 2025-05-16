@@ -21,3 +21,13 @@
         <servlet-name>AstronautDetailServlet</servlet-name>
         <url-pattern>/detalle</url-pattern>
     </servlet-mapping>
+
+        <!-- REGISTRO de astronauta -->
+    <servlet>
+        <servlet-name>AstronautRegisterServlet</servlet-name>
+        <servlet-class>com.missiontracker.servlet.AstronautRegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AstronautRegisterServlet</servlet-name>
+        <url-pattern>/astronautas/registrar</url-pattern>
+    </servlet-mapping>
