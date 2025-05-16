@@ -1,34 +1,64 @@
-// package com.missiontracker.servlet;
+package com.missiontracker.servlet;
 
-// import com.missiontracker.dao.AstronautDAO;
-// import com.missiontracker.database.DBConnection;
-// import com.missiontracker.model.Astronaut;
+import com.missiontracker.dao.AstronautDAO;
+import com.missiontracker.database.DBConnection;
+import com.missiontracker.model.Astronaut;
 
-// import javax.servlet.*;
-// import javax.servlet.http.*;
-// import java.io.IOException;
-// import java.sql.Connection;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.IOException;
+import java.sql.Connection;
 
-// public class AstronautRegisterServlet {
-//     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//             throws ServletException, IOException {
+@WebServlet("/astronautas/registro")
+public class AstronautRegisterServlet extends HttpServlet {
 
-//         String name = request.getParameter("name");
-//         String nationality = request.getParameter("nationality");
-//         String role = request.getParameter("role");
-//         String missionIdStr = request.getParameter("missionId");
-        
-//         int missionId = 0;
-//         if (missionIdStr != null && !missionIdStr.isEmpty()) {
-//             missionId = Integer.parseInt(missionIdStr);
-//         }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-//         Astronaut newAstronaut = new Astronaut(0, name, nationality, role, missionId);
+        String name = request.getParameter("name");
+        String nationality = request.getParameter("nationality");
+        String role = request.getParameter("role");
+        String missionIdParam = request.getParameter("missionid");
 
-//         Connection conn = DBConnection.getConnection();
-//         AstronautDAO dao = new AstronautDAO(conn);
-//         dao.insertAstronaut(newAstronaut);
+        // Validación básica
+        if (name == null || nationality == null || role == null || missionIdParam == null ||
+                name.isEmpty() || nationality.isEmpty() || role.isEmpty() || missionIdParam.isEmpty()) {
 
-//         response.sendRedirect("/MissionTracker/astronautas");
-//     }
-// }
+            request.setAttribute("error", "❌ Todos los campos son obligatorios.");
+            request.getRequestDispatcher("/astronautas/formulario.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            int missionId = Integer.parseInt(missionIdParam);
+
+            Astronaut astronaut = new Astronaut();
+            astronaut.setName(name);
+            astronaut.setNationality(nationality);
+            astronaut.setRole(role);
+            astronaut.setMissionid(missionId);
+
+            DBConnection db = new DBConnection();
+            db.connect();
+            Connection connection = db.getConnection();
+
+            AstronautDAO dao = new AstronautDAO(connection);
+            dao.insertAstronaut(astronaut);
+
+            db.disconnect();
+
+            // Redirigir a la lista si todo salió bien
+            response.sendRedirect(request.getContextPath() + "/astronautas/lista");
+
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "❌ El ID de la misión debe ser un número válido.");
+            request.getRequestDispatcher("/astronautas/formulario.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "❌ Error interno al registrar astronauta.");
+            request.getRequestDispatcher("/astronautas/formulario.jsp").forward(request, response);
+        }
+    }
+}

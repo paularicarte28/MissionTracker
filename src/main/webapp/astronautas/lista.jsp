@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>Astronautas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
+    <!-- CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-dark text-white">
@@ -16,7 +16,7 @@
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="text-info">👨‍🚀 Lista de Astronautas</h2>
-        <a href="<%= request.getContextPath() %>/astronautas/registro" class="btn btn-success">➕ Añadir Astronauta</a>
+        <a href="<%= request.getContextPath() %>/astronautas/formulario.jsp" class="btn btn-success">➕ Añadir Astronauta</a>
     </div>
 
     <%
@@ -56,7 +56,7 @@
     <% } %>
 </div>
 
-<!-- Bootstrap JS -->
+<!-- JavaScript de Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
