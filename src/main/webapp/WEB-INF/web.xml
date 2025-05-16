@@ -47,6 +47,17 @@
         <servlet-name>MissionListServlet</servlet-name>
         <servlet-class>com.missiontracker.servlet.MissionListServlet</servlet-class>
     </servlet>
+
+        <!-- update astronauta -->
+    <servlet>
+        <servlet-name>AstronautUpdateServlet</servlet-name>
+        <servlet-class>com.missiontracker.servlet.AstronautUpdateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AstronautUpdateServlet</servlet-name>
+        <url-pattern>/astronautas/actualizar</url-pattern>
+    </servlet-mapping>
     
     <!-- Lista misiones -->
 

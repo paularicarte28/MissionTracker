@@ -139,4 +139,26 @@ public class AstronautDAO {
         return 0;
     }
 
+     // UPDATE ONE
+    public void updateAstronaut(Astronaut astronaut) {
+        try {
+            String sql = "UPDATE astronaut SET name=?, nationality=?, role=?, mission_id=? WHERE id=?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, astronaut.getName());
+            stmt.setString(2, astronaut.getNationality());
+            stmt.setString(3, astronaut.getRole());
+
+            if (astronaut.getMissionId() == 0) {
+                stmt.setNull(4, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(4, astronaut.getMissionId());
+            }
+
+            stmt.setInt(5, astronaut.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
