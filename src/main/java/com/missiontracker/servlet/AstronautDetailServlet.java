@@ -1,26 +1,25 @@
 package com.missiontracker.servlet;
 
 import com.missiontracker.dao.AstronautDAO;
-import com.missiontracker.database.DBConnection;
 import com.missiontracker.model.Astronaut;
+import com.missiontracker.database.DBConnection;
 
-import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Connection;
 
 @WebServlet("/astronautas/detalle")
-
 public class AstronautDetailServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("id"));
 
+        try {
             DBConnection db = new DBConnection();
             db.connect();
             Connection connection = db.getConnection();
@@ -33,7 +32,9 @@ public class AstronautDetailServlet extends HttpServlet {
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
-            e.printStackTrace(); // SteamWeb-style: imprime y sigue sin interrupción
+            e.printStackTrace();
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().println("<h2 style='color:red'>❌ Error al cargar el detalle</h2>");
         }
     }
 }
