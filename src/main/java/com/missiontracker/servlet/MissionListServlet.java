@@ -32,7 +32,7 @@ public class MissionListServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().println("<h2 style='color:red'>❌ Error al cargar las misiones</h2>");
+            response.getWriter().println("<h2 style='color:red'>❌ Error loading the missions</h2>");
         }
     }
 }

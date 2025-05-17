@@ -34,7 +34,7 @@ public class MissionEditServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().println("<h2 style='color:red'>❌ Error al cargar el formulario de edición</h2>");
+            response.getWriter().println("<h2 style='color:red'>❌ Error loading the edit form</h2>");
         }
     }
 }
