@@ -22,14 +22,19 @@ public class AstronautListServlet extends HttpServlet {
             DBConnection db = new DBConnection();
             db.connect();
             Connection connection = db.getConnection();
-
             AstronautDAO dao = new AstronautDAO(connection);
 
             String q = request.getParameter("q");
             String nationality = request.getParameter("nationality");
 
-            List<Astronaut> astronauts;
+            // Paginación
+            int page = 1;
+            int limit = 3; // todoo cambiar la cantidad cuando tengamos mas registros
 
+
+            String pageParam = request.getParameter("page");
+            if (pageParam != null && pageParam.matches("\\d+")) {
+                page = Integer.parseInt(pageParam);
 
             if ((q != null && !q.trim().isEmpty()) || (nationality != null && !nationality.trim().isEmpty())) {
                 astronauts = dao.searchAstronauts(q, nationality);
@@ -37,17 +42,39 @@ public class AstronautListServlet extends HttpServlet {
 
                 astronauts = dao.getAllAstronauts();
             }
+            int offset = (page - 1) * limit;
+            // 🔍 LOG PARA DEBUG
+            System.out.println("🔍 FILTERS: q=" + q + ", nationality=" + nationality);
+            System.out.println("📄 PAGINATION: page=" + page + ", limit=" + limit + ", offset=" + offset);
+
+            //contar los astronautas totales de mi lista 
+            int totalAstronauts = dao.countAllAstronauts(q, nationality);
+            int totalPages = (int) Math.ceil((double) totalAstronauts / limit);
+
+            // getr astronautas paginados
+            List<Astronaut> astronauts = dao.getAstronautsPaged(q, nationality, offset, limit);
 
             request.setAttribute("astronauts", astronauts);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
+
+            //filtro
+            request.setAttribute("q", q);
+            request.setAttribute("nationality", nationality);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/astronautas/lista.jsp");
             dispatcher.forward(request, response);
 
-            connection.close(); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().println("<h2 style='color:red'>❌ Error al cargar astronautas</h2>");
+
+            connection.close();
+
+        } 
+        catch (Exception e) {
+        System.err.println("❌ ERROR DETECTADO EN AstronautListServlet:");
+        e.printStackTrace();
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().println("<h2 style='color:red'> Error loading astronauts</h2>");
+
         }
     }
 }
