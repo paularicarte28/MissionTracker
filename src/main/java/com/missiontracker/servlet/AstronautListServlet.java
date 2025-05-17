@@ -29,52 +29,44 @@ public class AstronautListServlet extends HttpServlet {
 
             // Paginación
             int page = 1;
-            int limit = 3; // todoo cambiar la cantidad cuando tengamos mas registros
-
+            int limit = 3;
 
             String pageParam = request.getParameter("page");
             if (pageParam != null && pageParam.matches("\\d+")) {
                 page = Integer.parseInt(pageParam);
-
-            if ((q != null && !q.trim().isEmpty()) || (nationality != null && !nationality.trim().isEmpty())) {
-                astronauts = dao.searchAstronauts(q, nationality);
-            } else {
-
-                astronauts = dao.getAllAstronauts();
             }
+
             int offset = (page - 1) * limit;
+
             // 🔍 LOG PARA DEBUG
             System.out.println("🔍 FILTERS: q=" + q + ", nationality=" + nationality);
             System.out.println("📄 PAGINATION: page=" + page + ", limit=" + limit + ", offset=" + offset);
 
-            //contar los astronautas totales de mi lista 
+            // Contar el total de resultados
             int totalAstronauts = dao.countAllAstronauts(q, nationality);
             int totalPages = (int) Math.ceil((double) totalAstronauts / limit);
 
-            // getr astronautas paginados
+            // Obtener astronautas paginados
             List<Astronaut> astronauts = dao.getAstronautsPaged(q, nationality, offset, limit);
 
+            // Atributos para la vista
             request.setAttribute("astronauts", astronauts);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("currentPage", page);
-
-            //filtro
             request.setAttribute("q", q);
             request.setAttribute("nationality", nationality);
 
+            // Redirigir a la JSP
             RequestDispatcher dispatcher = request.getRequestDispatcher("/astronautas/lista.jsp");
             dispatcher.forward(request, response);
 
-
             connection.close();
 
-        } 
-        catch (Exception e) {
-        System.err.println("❌ ERROR DETECTADO EN AstronautListServlet:");
-        e.printStackTrace();
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().println("<h2 style='color:red'> Error loading astronauts</h2>");
-
+        } catch (Exception e) {
+            System.err.println("❌ ERROR DETECTADO EN AstronautListServlet:");
+            e.printStackTrace();
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().println("<h2 style='color:red'> Error loading astronauts</h2>");
         }
     }
 }
