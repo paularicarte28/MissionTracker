@@ -147,4 +147,70 @@ public class AstronautDAO {
         }
         return astronauts;
     }
+
+    //paginacion
+    public int countAllAstronauts(String q, String nationality) {
+        String sql = "SELECT COUNT(*) FROM astronauts WHERE 1=1"
+                + (q != null && !q.isEmpty() ? " AND (name LIKE ? OR role LIKE ?)" : "")
+                + (nationality != null && !nationality.isEmpty() ? " AND nationality = ?" : "");
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            int index = 1;
+            if (q != null && !q.isEmpty()) {
+                stmt.setString(index++, "%" + q + "%");
+                stmt.setString(index++, "%" + q + "%");
+            }
+            if (nationality != null && !nationality.isEmpty()) {
+                stmt.setString(index++, nationality);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) {
+           e.printStackTrace();
+        }
+            return 0;
+    }
+
+    public List<Astronaut> getAstronautsPaged(String q, String nationality, int offset, int limit) {
+
+        List<Astronaut> astronauts = new ArrayList<>();
+        String sql = "SELECT * FROM astronauts WHERE 1=1"
+                + (q != null && !q.isEmpty() ? " AND (name LIKE ? OR role LIKE ?)" : "")
+                + (nationality != null && !nationality.isEmpty() ? " AND nationality = ?" : "")
+                + " ORDER BY name LIMIT ? OFFSET ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            int index = 1;
+            if (q != null && !q.isEmpty()) {
+                stmt.setString(index++, "%" + q + "%");
+                stmt.setString(index++, "%" + q + "%");
+            }
+            if (nationality != null && !nationality.isEmpty()) {
+                stmt.setString(index++, nationality);
+            }
+
+            stmt.setInt(index++, limit);
+            stmt.setInt(index, offset);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Astronaut a = new Astronaut();
+                    a.setId(rs.getInt("id"));
+                    a.setName(rs.getString("name"));
+                    a.setNationality(rs.getString("nationality"));
+                    a.setRole(rs.getString("role"));
+                    a.setMissionid(rs.getInt("mission_id"));
+                    astronauts.add(a);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+       return astronauts;
+    }
+
 }
