@@ -19,8 +19,6 @@
                             <h2 class="card-title text-warning">🚀 <%= mission.getName() %>
                             </h2>
                             <p class="card-text">
-                                <strong>ID:</strong>
-                                <%= mission.getId() %><br>
                                     <strong>Launch Date:</strong>
                                     <%= mission.getLaunchDate() %><br>
                                         <strong>Objective:</strong>
