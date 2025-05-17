@@ -193,7 +193,7 @@ public class AstronautDAO {
             }
 
             stmt.setInt(index++, limit);
-            stmt.setInt(index, offset);
+            stmt.setInt(index++, offset);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

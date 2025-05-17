@@ -36,6 +36,9 @@ public class AstronautListServlet extends HttpServlet {
                 page = Integer.parseInt(pageParam);
             }
             int offset = (page - 1) * limit;
+            // 🔍 LOG PARA DEBUG
+            System.out.println("🔍 FILTERS: q=" + q + ", nationality=" + nationality);
+            System.out.println("📄 PAGINATION: page=" + page + ", limit=" + limit + ", offset=" + offset);
 
             //contar los astronautas totales de mi lista 
             int totalAstronauts = dao.countAllAstronauts(q, nationality);
@@ -57,10 +60,12 @@ public class AstronautListServlet extends HttpServlet {
 
             connection.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().println("<h2 style='color:red'>❌ Error loading astronauts</h2>");
+        } 
+        catch (Exception e) {
+        System.err.println("❌ ERROR DETECTADO EN AstronautListServlet:");
+        e.printStackTrace();
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().println("<h2 style='color:red'> Error loading astronauts</h2>");
         }
     }
 }
