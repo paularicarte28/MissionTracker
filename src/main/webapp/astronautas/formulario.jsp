@@ -41,7 +41,7 @@
                         <div class="alert alert-danger" role="alert">${error}</div>
                     </c:if>
 
-                    <form action="${pageContext.request.contextPath}/astronautas/registro" method="post">
+                    <form action="${pageContext.request.contextPath}/astronautas/formulario" method="post">
                         <div class="mb-3">
                             <label for="name" class="form-label">Full Name</label>
                             <input type="text" id="name" name="name" class="form-control" required>
