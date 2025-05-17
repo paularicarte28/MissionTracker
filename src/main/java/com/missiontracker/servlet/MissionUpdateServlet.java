@@ -1,17 +1,7 @@
-package com.missiontracker.servlet;
-
-import com.missiontracker.dao.MissionDAO;
-import com.missiontracker.model.Mission;
-import com.missiontracker.database.DBConnection;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.IOException;
-import java.sql.Connection;
-
 @WebServlet("/misiones/actualizar")
 public class MissionUpdateServlet extends HttpServlet {
+
+    private static final List<String> VALID_STATUSES = List.of("PLANNED", "ACTIVE", "COMPLETED", "CANCELLED");
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -21,7 +11,14 @@ public class MissionUpdateServlet extends HttpServlet {
         String name = request.getParameter("name");
         String launchDate = request.getParameter("launchDate");
         String objective = request.getParameter("objective");
-        String status = request.getParameter("status");
+        String status = request.getParameter("status").toUpperCase();
+
+        
+        if (!VALID_STATUSES.contains(status)) {
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().println("<h2 style='color:red'>❌ Invalid status value</h2>");
+            return;
+        }
 
         Mission mission = new Mission(id, name, launchDate, objective, status);
 
@@ -38,7 +35,7 @@ public class MissionUpdateServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().println("<h2 style='color:red'>❌ Error al actualizar la misión</h2>");
+            response.getWriter().println("<h2 style='color:red'>❌ Error updating mission</h2>");
         }
     }
 }
