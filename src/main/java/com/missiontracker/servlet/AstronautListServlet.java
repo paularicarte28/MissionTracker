@@ -30,11 +30,11 @@ public class AstronautListServlet extends HttpServlet {
 
             List<Astronaut> astronauts;
 
-            // Si hay filtros, busca
+
             if ((q != null && !q.trim().isEmpty()) || (nationality != null && !nationality.trim().isEmpty())) {
                 astronauts = dao.searchAstronauts(q, nationality);
             } else {
-                // Sin filtros → mostrar todos
+
                 astronauts = dao.getAllAstronauts();
             }
 
@@ -43,7 +43,7 @@ public class AstronautListServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/astronautas/lista.jsp");
             dispatcher.forward(request, response);
 
-            connection.close(); // ✅ IMPORTANTE cerrar conexión
+            connection.close(); 
         } catch (Exception e) {
             e.printStackTrace();
             response.setContentType("text/html;charset=UTF-8");
