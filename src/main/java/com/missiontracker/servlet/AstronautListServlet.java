@@ -31,9 +31,16 @@ public class AstronautListServlet extends HttpServlet {
             int page = 1;
             int limit = 3; // todoo cambiar la cantidad cuando tengamos mas registros
 
+
             String pageParam = request.getParameter("page");
             if (pageParam != null && pageParam.matches("\\d+")) {
                 page = Integer.parseInt(pageParam);
+
+            if ((q != null && !q.trim().isEmpty()) || (nationality != null && !nationality.trim().isEmpty())) {
+                astronauts = dao.searchAstronauts(q, nationality);
+            } else {
+
+                astronauts = dao.getAllAstronauts();
             }
             int offset = (page - 1) * limit;
             // 🔍 LOG PARA DEBUG
@@ -58,6 +65,7 @@ public class AstronautListServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/astronautas/lista.jsp");
             dispatcher.forward(request, response);
 
+
             connection.close();
 
         } 
@@ -66,6 +74,7 @@ public class AstronautListServlet extends HttpServlet {
         e.printStackTrace();
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().println("<h2 style='color:red'> Error loading astronauts</h2>");
+
         }
     }
 }
