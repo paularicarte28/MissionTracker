@@ -1,6 +1,5 @@
 package com.missiontracker.dao;
 
-import com.missiontracker.model.Astronaut;
 import com.missiontracker.model.Mission;
 import java.sql.*;
 import java.util.ArrayList;
