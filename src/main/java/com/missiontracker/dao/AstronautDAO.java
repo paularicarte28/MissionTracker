@@ -40,6 +40,42 @@ public class AstronautDAO {
         return astronaut;
     }
 
+      public Astronaut deleteAstronautById(int id) {
+    Astronaut astronaut = null;
+    try {
+        String selectSql = "SELECT * FROM astronauts WHERE id = ?";
+        PreparedStatement selectStmt = connection.prepareStatement(selectSql);
+        selectStmt.setInt(1, id);
+        ResultSet rs = selectStmt.executeQuery();
+
+        if (rs.next()) {
+            astronaut = new Astronaut();
+            astronaut.setId(rs.getInt("id"));
+            astronaut.setName(rs.getString("name"));
+            astronaut.setNationality(rs.getString("nationality"));
+            astronaut.setRole(rs.getString("role"));
+            astronaut.setMissionid(rs.getInt("mission_id"));
+        }
+
+        rs.close();
+        selectStmt.close();
+
+        if (astronaut != null) {
+            String deleteSql = "DELETE FROM astronauts WHERE id = ?";
+            PreparedStatement deleteStmt = connection.prepareStatement(deleteSql);
+            deleteStmt.setInt(1, id);
+            deleteStmt.executeUpdate();
+            deleteStmt.close();
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return astronaut;
+}
+
+    
+
     public List<Astronaut> getAllAstronauts() {
         List<Astronaut> astronauts = new ArrayList<>();
         try {
@@ -63,5 +99,6 @@ public class AstronautDAO {
             e.printStackTrace();
         }
         return astronauts;
+        
     }
 }
