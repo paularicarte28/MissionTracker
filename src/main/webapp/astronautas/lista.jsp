@@ -29,7 +29,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="text-info">👨‍🚀 Astronaut List</h2>
-        <a href="<%= request.getContextPath() %>/astronautas/registro" class="btn btn-success">➕ Add Astronaut</a>
+        <a href="<%= request.getContextPath() %>/astronautas/formulario.jsp" class="btn btn-success">➕ Add Astronaut</a>
     </div>
 
     <%
