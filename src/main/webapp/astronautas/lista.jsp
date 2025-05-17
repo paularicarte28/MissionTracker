@@ -9,10 +9,9 @@
     <title>Astronaut List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Font -->
+   
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -48,7 +47,7 @@
         ➕ Add Astronaut
     </a>
 
-    <!-- Filtros -->
+
     <form class="row g-3 justify-content-center mb-5" method="get" action="<%= request.getContextPath() %>/astronautas/lista">
         <div class="col-md-4">
             <input type="text" class="form-control" name="q" placeholder="Search by name or role"
@@ -120,7 +119,6 @@
 
 </div>
 
-<!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.missiontracker.dao;
 
+import com.missiontracker.model.Astronaut;
 import com.missiontracker.model.Mission;
 import java.sql.*;
 import java.util.ArrayList;
@@ -109,4 +110,20 @@ public class MissionDAO {
             e.printStackTrace();
         }
     }
+
+    public boolean deleteMissionById(int id) {
+    try {
+        String sql = "DELETE FROM missions WHERE id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
+        int affectedRows = stmt.executeUpdate();
+        stmt.close();
+        return affectedRows > 0;
+
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 }
