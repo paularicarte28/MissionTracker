@@ -19,18 +19,16 @@
                             <h2 class="card-title text-info">🧑‍🚀 <%= astronaut.getName() %>
                             </h2>
                             <p class="card-text">
-                                <strong>ID:</strong>
-                                <%= astronaut.getId() %><br>
-                                    <strong>Nationality:</strong>
-                                    <%= astronaut.getNationality() %><br>
-                                        <strong>Role:</strong>
-                                        <%= astronaut.getRole() %><br>
-                                            <strong>Mission:</strong>
-                                            <% if (astronaut.getMissionid()> 0) { %>
-                                                <%= astronaut.getMissionName() %> (<%= astronaut.getMissionid() %>)<br>
-                                                        <% } else { %>
-                                                            None<br>
-                                                            <% } %>
+                                <strong>Nationality:</strong>
+                                <%= astronaut.getNationality() %><br>
+                                    <strong>Role:</strong>
+                                    <%= astronaut.getRole() %><br>
+                                        <strong>Mission:</strong>
+                                        <% if (astronaut.getMissionid()> 0) { %>
+                                            <%= astronaut.getMissionName() %><br>
+                                                <% } else { %>
+                                                    None<br>
+                                                    <% } %>
                             </p>
                             <% if (astronaut.getMissionid()> 0) { %>
                                 <a href="<%= request.getContextPath() %>/misiones/detalle?id=<%= astronaut.getMissionid() %>"
