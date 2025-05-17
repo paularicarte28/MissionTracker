@@ -8,25 +8,12 @@
     <meta charset="UTF-8">
     <title>Astronauts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-dark text-white">
 
 <div class="container py-5">
-
-    <%
-        String deletedName = (String) session.getAttribute("deletedAstronaut");
-        if (deletedName != null) {
-    %>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            ✅ Astronaut <strong><%= deletedName %></strong> was successfully deleted.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <%
-            session.removeAttribute("deletedAstronaut");
-        }
-    %>
-
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="text-info">👨‍🚀 Astronaut List</h2>
         <a href="<%= request.getContextPath() %>/astronautas/formulario.jsp" class="btn btn-success">➕ Add Astronaut</a>
@@ -34,6 +21,7 @@
 
     <%
         List<Astronaut> astronauts = (List<Astronaut>) request.getAttribute("astronauts");
+
         if (astronauts == null || astronauts.isEmpty()) {
     %>
         <div class="alert alert-warning">⚠️ No astronauts registered in the database.</div>

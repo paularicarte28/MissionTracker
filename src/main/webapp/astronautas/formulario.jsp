@@ -62,10 +62,10 @@
                 <input type="text" class="form-control" id="role" name="role" required>
             </div>
 
-            <!-- <div class="mb-3">
+            <div class="mb-3">
                 <label for="missionid" class="form-label">Mission ID</label>
                 <input type="number" class="form-control" id="missionid" name="missionid" required>
-            </div> -->
+            </div>
 
             <button type="submit" class="btn btn-primary w-100">Submit</button>
         </form>
