@@ -112,18 +112,34 @@ public class MissionDAO {
     }
 
     public boolean deleteMissionById(int id) {
-    try {
-        String sql = "DELETE FROM missions WHERE id = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
-        int affectedRows = stmt.executeUpdate();
-        stmt.close();
-        return affectedRows > 0;
+        try {
+            String sql = "DELETE FROM missions WHERE id = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            int affectedRows = stmt.executeUpdate();
+            stmt.close();
+            return affectedRows > 0;
 
-        
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //insert
+    public void insertMission(Mission mission) {
+    try {
+        String sql = "INSERT INTO missions (name, launch_date, objective, status) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, mission.getName());
+        stmt.setString(2, mission.getLaunchDate());
+        stmt.setString(3, mission.getObjective());
+        stmt.setString(4, mission.getStatus());
+        stmt.executeUpdate();
+        stmt.close();
     } catch (SQLException e) {
         e.printStackTrace();
-        return false;
     }
 }
 }
