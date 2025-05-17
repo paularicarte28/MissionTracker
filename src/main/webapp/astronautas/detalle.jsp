@@ -14,6 +14,7 @@
                 <div class="container py-5">
                     <a href="<%= request.getContextPath() %>/astronautas/lista" class="btn btn-outline-light mb-4">⬅
                         Back to Astronaut List</a>
+
                     <div class="card bg-secondary text-white border-info shadow-lg">
                         <div class="card-body">
                             <h2 class="card-title text-info">🧑‍🚀 <%= astronaut.getName() %>
@@ -30,6 +31,7 @@
                                                     None<br>
                                                     <% } %>
                             </p>
+
                             <% if (astronaut.getMissionid()> 0) { %>
                                 <a href="<%= request.getContextPath() %>/misiones/detalle?id=<%= astronaut.getMissionid() %>"
                                     class="btn btn-warning mt-3">🔭 View Assigned Mission</a>
@@ -39,7 +41,6 @@
                         </div>
                     </div>
                 </div>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
             </body>
 
             </html>
