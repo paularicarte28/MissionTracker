@@ -173,6 +173,24 @@ public class AstronautDAO {
         }
             return 0;
     }
+    public boolean updateAstronaut(Astronaut astronaut) {
+    String sql = "UPDATE astronauts SET name = ?, nationality = ?, role = ?, mission_id = ? WHERE id = ?";
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setString(1, astronaut.getName());
+        stmt.setString(2, astronaut.getNationality());
+        stmt.setString(3, astronaut.getRole());
+        stmt.setInt(4, astronaut.getMissionid());
+        stmt.setInt(5, astronaut.getId());
+
+        int affectedRows = stmt.executeUpdate();
+        return affectedRows != 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 
     public List<Astronaut> getAstronautsPaged(String q, String nationality, int offset, int limit) {
 

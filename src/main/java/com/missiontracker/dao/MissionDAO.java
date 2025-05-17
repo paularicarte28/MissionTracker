@@ -141,4 +141,29 @@ public class MissionDAO {
         e.printStackTrace();
     }
 }
+
+public Mission getMissionByName(String name) {
+    Mission mission = null;
+    try {
+        String sql = "SELECT * FROM missions WHERE name = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, name);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            mission = new Mission();
+            mission.setId(rs.getInt("id"));
+            mission.setName(rs.getString("name"));
+            mission.setLaunchDate(rs.getString("launch_date"));
+            mission.setObjective(rs.getString("objective"));
+            mission.setStatus(rs.getString("status"));
+        }
+
+        stmt.close();
+        rs.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return mission;
+}
 }
