@@ -1,3 +1,16 @@
+package com.missiontracker.servlet;
+
+import com.missiontracker.dao.MissionDAO;
+import com.missiontracker.model.Mission;
+import com.missiontracker.database.DBConnection;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.List;
+
 @WebServlet("/misiones/actualizar")
 public class MissionUpdateServlet extends HttpServlet {
 
